@@ -1,4 +1,4 @@
-libgpc
-======
+The PGC
+=======
 
 Phylame General Collection
