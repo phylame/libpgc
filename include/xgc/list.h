@@ -23,7 +23,54 @@
 #ifndef _LIST_H_
 # define _LIST_H_
 
+#ifdef __cplusplus
+extern "C"
+#endif
 
 
+#include "xgc.h"
+#include <stdbool.h>
+
+/* linked list */
+typedef struct {
+	xnode head;
+	xnode tail;
+	size_t size;
+} XList;
+
+/* create an empty list */
+extern XList* mklist(void);
+
+/* initializa list */
+extern void initlist(XList *list);
+
+/* remove list from memory */
+extern void rmlist(XList *list);
+
+/* clean list */
+extern void clrlist(XList *list);
+
+/* get the length of list */
+extern size_t listlen(const XList *list);
+
+/* travel list */
+extern void listrv(XList *list, bool (*walk)(void *data));
+
+extern void listadd(XList *list, const void *data);
+extern void listins(XList *list, int index, const void *data);
+extern void listext(XList *list, const XList *other);
+
+extern void listdel(XList *list, const void *data);
+extern void listpop(XList *list, int index);
+
+extern int listloc(XList *list, const void *data);
+extern bool listhas(XList *list, const void *data);
+
+extern void listset(XList *list, int index, void *data);
+extern void* listget(XList *list, int index);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif	/* _LIST_H_ */
