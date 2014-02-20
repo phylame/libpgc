@@ -1,4 +1,4 @@
-The PGC
+The XGC
 =======
 
-Phylame General Collection
+XGC - the X General Collection. A library providers common data structures for programming.
