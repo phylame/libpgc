@@ -23,7 +23,7 @@
 # define _XGC_H_
 
 #ifdef __cplusplus
-extern "C"
+extern "C" {
 #endif
 
 #ifndef ELEMENT_TYPE
@@ -42,7 +42,7 @@ typedef struct _node {
 #define XNODE_SIZE	(sizeof(struct _node))
 
 /* create a node */
-extern xnode make_node(const elem_t data);
+extern xnode make_node(elem_t data);
 
 /* remove node from memory */
 extern void delete_node(xnode node);

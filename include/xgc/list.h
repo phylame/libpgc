@@ -24,7 +24,7 @@
 # define _LIST_H_
 
 #ifdef __cplusplus
-extern "C"
+extern "C" {
 #endif
 
 
@@ -36,6 +36,7 @@ extern "C"
 typedef struct {
 	xnode head;
 	xnode tail;
+	int (*cmp)(const elem_t a, const elem_t b);
 	size_t size;
 } XList;
 
@@ -55,37 +56,36 @@ extern void clrlist(XList *list);
 extern size_t listlen(const XList *list);
 
 /* travel list */
-extern void listrv(XList *list, bool (*walk)(elem_t data, void *arg),
+extern void listrv(XList *list, bool (*walk)(elem_t value, void *arg),
 	void *arg);
 
 /* append an element to the end of list */
-extern bool listadd(XList *list, const elem_t data);
+extern bool listadd(XList *list, elem_t value);
 
 /* insert an element before index in list */
-extern bool listins(XList *list, int index, const elem_t data);
+extern bool listins(XList *list, int index, elem_t value);
 
 /* extend list with other list */
 extern void listext(XList *list, const XList *other);
 
 /* remove an element from list */
-extern void listdel(XList *list, const elem_t data);
+extern void listdel(XList *list, const elem_t value);
 
 /* remove an element from list by its index */
 extern void listpop(XList *list, int index);
 
 /* get the index of element in list */
-extern int listloc(XList *list, const elem_t data, 
-	bool (*cmp)(const elem_t a, const elem_t b));
+extern int listloc(const XList *list, const elem_t value);
 
 /* test element is in list */
-extern bool listhas(XList *list, const elem_t data,
-	bool (*cmp)(const elem_t a, const elem_t b));
+extern bool listhas(const XList *list, const elem_t value);
 
 /* set element at index in list */
-extern void listset(XList *list, int index, const elem_t data);
+extern bool listset(XList *list, int index, elem_t value);
 
 /* get element at index in list */
-extern elem_t listget(XList *list, int index);
+extern elem_t listget(const XList *list, int index,
+	elem_t def_value);
 
 #ifdef __cplusplus
 }

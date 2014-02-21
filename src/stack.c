@@ -15,21 +15,15 @@
  */
 
 /*
- * array.h
- * A simple array
+ * stack.c
+ * FILO - stack
  * This file is part of XGC, the X General Collection
  */
 
-#ifndef _ARRAY_H_
-# define _ARRAY_H_
+#include <xgc/stack.h>
+#include <xgc/list.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-
-#ifdef __cplusplus
+void stkpop(XStack *stack)
+{
+	listpop(stack, 0);
 }
-#endif
-
-#endif	/* _ARRAY_H_ */

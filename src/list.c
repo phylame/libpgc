@@ -34,12 +34,12 @@ static void rmnod(xnode node)
 }
 
 /* insert element before node */
-static bool insnod(const elem_t data, xnode pos)
+static bool insnod(elem_t value, xnode pos)
 {
 	xnode node;
 	if (NULL == pos)
 		return false;
-	node = make_node(data);
+	node = make_node(value);
 	if (NULL == node)
 		return false;
 	node->next = pos;
@@ -49,14 +49,39 @@ static bool insnod(const elem_t data, xnode pos)
 	return true;
 }
 
-/* get node at index */
-static xnode get_list_node(XList *list, int index)
+/* get node by value */
+static xnode get_node_by_value(const XList *list, const elem_t value,
+		int *index)
 {
 	xnode cur;
-	int i = 1;
+	int i = 0;
 	if (NULL == list)
 		return NULL;
-	cur = list->head;
+	for (cur = list->head->next; cur != list->tail; cur = cur->next) {
+		if (list->cmp != NULL) {	// has compared function
+			if (0 == list->cmp(cur->data, value))
+				break;
+		} else if (cur->data == value) {
+			break;
+		}
+		++i;
+	}
+	if (cur != list->tail) {
+		if (index != NULL)
+			*index = i;
+		return cur;
+	} else
+		return NULL;
+}
+
+/* get node by index */
+static xnode get_node_by_index(const XList *list, int index)
+{
+	xnode cur;
+	int i = 0;
+	if (NULL == list || index < 0)
+		return NULL;
+	cur = list->head->next;
 	while (cur != list->tail && i < index) {
 		cur = cur->next;
 		++i;
@@ -113,8 +138,8 @@ void clrlist(XList *list)
 	while (cur != list->tail) {
 		cur = cur->next;
 		rmnod(cur->prev);
+		--list->size;
 	}
-	list->size = 0;
 }
 
 size_t listlen(const XList *list)
@@ -122,7 +147,7 @@ size_t listlen(const XList *list)
 	return NULL == list ? 0 : list->size;
 }
 
-void listrv(XList *list, bool (*visit)(elem_t data, void *arg), void *arg)
+void listrv(XList *list, bool (*visit)(elem_t value, void *arg), void *arg)
 {
 	xnode cur;
 	if (NULL == list || NULL == visit)
@@ -133,25 +158,88 @@ void listrv(XList *list, bool (*visit)(elem_t data, void *arg), void *arg)
 	}
 }
 
-bool listadd(XList *list, const elem_t data)
+bool listadd(XList *list, elem_t value)
 {
 	if (NULL == list)
 		return false;
-	else if (! insnod(data, list->tail))
+	else if (! insnod(value, list->tail))
 		return false;
 	++list->size;
 	return true;
 }
 
-bool listins(XList *list, int index, const elem_t data)
+bool listins(XList *list, int index, elem_t value)
 {
 	xnode pos;
-	pos = get_list_node(list, index);
+	pos = get_node_by_index(list, index);
 	if (NULL == pos)
 		return false;
-	else if (! insnod(data, pos))
+	else if (! insnod(value, pos))
 		return false;
 	++list->size;
 	return true;
 }
 
+void listext(XList *list, const XList *other)
+{
+	xnode cur;
+	if (NULL == list || NULL == other)
+		return;
+	for (cur = other->head->next; cur != other->tail; cur = cur->next) {
+		if (! insnod(cur->data, list->tail))
+			continue;
+		++list->size;
+	}
+}
+
+void listdel(XList *list, const elem_t value)
+{
+	xnode node = get_node_by_value(list, value, NULL);
+	if (node != NULL) {
+		rmnod(node);
+		--list->size;
+	}
+}
+
+void listpop(XList *list, int index)
+{
+	xnode node = get_node_by_index(list, index);
+	if (NULL == node)
+		return;
+	rmnod(node);
+	--list->size;
+}
+
+int listloc(const XList *list, const elem_t value)
+{
+	int index;
+	xnode node = get_node_by_value(list, value, &index);
+	if (node != NULL)
+		return index;
+	else
+		return -1;
+}
+
+bool listhas(const XList *list, const elem_t value)
+{
+	return listloc(list, value) != -1;
+}
+
+bool listset(XList *list, int index, elem_t value)
+{
+	xnode node = get_node_by_index(list, index);
+	if (NULL == node)
+		return false;
+	node->data = value;
+	return true;
+}
+
+elem_t listget(const XList *list, int index, elem_t def_value)
+{
+	xnode node = get_node_by_index(list, index);
+	if (NULL == node) {	// not found
+		return def_value;
+	} else {
+		return node->data;
+	}
+}

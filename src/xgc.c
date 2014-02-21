@@ -24,7 +24,7 @@
 #include <stdlib.h>
 
 /* create a node */
-xnode make_node(const elem_t data)
+xnode make_node(elem_t data)
 {
 	xnode node = malloc(XNODE_SIZE);
 	if (node != NULL) {

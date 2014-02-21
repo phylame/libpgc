@@ -3,6 +3,7 @@ OBJS = xgc.o list.o test_list.o
 
 VPATH = ../src
 CPPFLAGS = -I../include
+CFLAGS = -Wall -g
 
 $(ALL): $(TARGET)
 

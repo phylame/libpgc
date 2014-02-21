@@ -15,21 +15,33 @@
  */
 
 /*
- * array.h
- * A simple array
+ * stack.h
+ * FILO - stack
  * This file is part of XGC, the X General Collection
  */
 
-#ifndef _ARRAY_H_
-# define _ARRAY_H_
+#ifndef _STACK_H_
+# define _STACK_H_
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#include "list.h"
+
+typedef XList XStack;
+
+#define mkstk mklist
+#define rmstk rmlist
+#define stklen listlen
+#define stkpush listadd
+
+/* pop an element */
+void stkpop(XStack *stack);
 
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif	/* _ARRAY_H_ */
+#endif	/* _STACK_H_ */
