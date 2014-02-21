@@ -24,10 +24,10 @@
 #include <stdlib.h>
 
 /* create a node */
-xnode make_node(const void *data)
+xnode make_node(const elem_t data)
 {
 	xnode node = malloc(XNODE_SIZE);
-	if (node) {
+	if (node != NULL) {
 		node->data = data;
 		node->prev = node->next = NULL;
 	}
@@ -37,7 +37,7 @@ xnode make_node(const void *data)
 /* remove node from memory */
 void delete_node(xnode node)
 {
-	if (node)
+	if (node != NULL)
 		free(node);
 }
 

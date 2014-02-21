@@ -26,10 +26,14 @@
 extern "C"
 #endif
 
+#ifndef ELEMENT_TYPE
+# define ELEMENT_TYPE
+# define elem_t void *
+#endif
 
 /* common node */
 typedef struct _node {
-	void *data;	// element
+	elem_t data;	// element
 	struct _node *prev;	// point to previous node
 	struct _node *next;	// point to next node
 } *xnode;
@@ -38,7 +42,7 @@ typedef struct _node {
 #define XNODE_SIZE	(sizeof(struct _node))
 
 /* create a node */
-extern xnode make_node(const void *data);
+extern xnode make_node(const elem_t data);
 
 /* remove node from memory */
 extern void delete_node(xnode node);
