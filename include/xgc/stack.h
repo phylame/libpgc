@@ -32,13 +32,11 @@ extern "C" {
 // using the XList
 typedef XList XStack;
 
-#define mkstk mklist
-#define rmstk rmlist
-#define stklen listlen
-#define stkpush listadd
-
-/* pop an element */
-void stkpop(XStack *stack);
+#define mkstk				mklist
+#define rmstk				rmlist
+#define stklen				listlen
+#define stkpush				listadd
+#define dtkpop(stack)		(NULL == stack ? false : listpop(stack, 0))
 
 
 #ifdef __cplusplus

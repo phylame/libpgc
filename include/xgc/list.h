@@ -53,7 +53,7 @@ extern void rmlist(XList *list);
 extern void clrlist(XList *list);
 
 /* get the length of list */
-#define listlen xxxlen
+#define listlen				xxxlen
 
 /* travel list */
 extern void listrv(XList *list, bool (*visit)(elem_t value, void *arg),
@@ -72,7 +72,7 @@ extern void listext(XList *list, const XList *other);
 extern void listdel(XList *list, const elem_t value);
 
 /* remove an element from list by its index */
-extern void listpop(XList *list, int index);
+extern void listpop(XList *list, int index, elem_t *value);
 
 /* get the index of element in list */
 extern int listloc(const XList *list, const elem_t value);
@@ -85,6 +85,12 @@ extern bool listset(XList *list, int index, elem_t value);
 
 /* get element at index in list */
 extern elem_t listget(const XList *list, int index, elem_t def_value);
+
+extern elem_t* listbeg(const XList *list);
+
+extern elem_t* listend(const XList *list);
+
+extern elem_t* listnext(const XList *list, const elem_t *current);
 
 #ifdef __cplusplus
 }

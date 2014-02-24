@@ -39,7 +39,7 @@ typedef struct _array {
 	size_t size;			// contains elements count
 } XArray;
 
-#define ARRAY_CAPACITY		30
+#define ARRAY_CAPACITY			30
 #define ARRAY_INCREMENT			20
 
 extern XArray* mkary(void);
@@ -81,7 +81,7 @@ extern elem_t* arybeg(const XArray *ary);
 extern elem_t* aryend(const XArray *ary);
 
 /* next point */
-extern elem_t* arynext(XArray *ary, elem_t *current);
+extern elem_t* arynext(const XArray *ary, const elem_t *current);
 
 #ifdef __cplusplus
 }

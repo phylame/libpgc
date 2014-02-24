@@ -200,11 +200,13 @@ void listdel(XList *list, const elem_t value)
 	}
 }
 
-void listpop(XList *list, int index)
+void listpop(XList *list, int index, elem_t *value)
 {
 	xnode node = get_node_by_index(list, index);
 	if (NULL == node)
 		return;
+	if (value != NULL)
+		*value = node->data;
 	rmnod(node);
 	--list->size;
 }
@@ -241,4 +243,36 @@ elem_t listget(const XList *list, int index, elem_t def_value)
 	} else {
 		return node->data;
 	}
+}
+
+
+elem_t* listbeg(const XList *list)
+{
+	if (NULL == list || 0 == listlen(list))
+		return NULL;
+	else
+		return &list->head->next->data;
+}
+
+elem_t* listend(const XList *list)
+{
+	if (NULL == list || 0 == listlen(list))
+		return NULL;
+	else
+		return &list->tail->data;
+}
+
+elem_t* listnext(const XList *list, const elem_t *current)
+{
+	static xnode node = NULL;
+	if (NULL == list || 0 == listlen(list))
+		return NULL;
+	if (current == listend(list))
+		return NULL;
+	if (NULL == node)
+		node = list->head->next;
+	else
+		node = node->next;
+	return &node->data;
+
 }

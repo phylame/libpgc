@@ -1,3 +1,7 @@
 #!/usr/bin/env bash
 
-gcc -g -Wall -I../include ../src/*.c $1
+cwd=`pwd`
+cd ..
+make
+cd $cwd
+gcc -g -Wall -I../include -L../dist -lxgc $1

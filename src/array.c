@@ -241,7 +241,7 @@ bool aryset(XArray *ary, int index, elem_t value)
 	return true;
 }
 
-elem_t *arybeg(const XArray *ary)
+elem_t* arybeg(const XArray *ary)
 {
 	if (NULL == ary || 0 == arylen(ary))	// no elements
 		return NULL;
@@ -249,7 +249,7 @@ elem_t *arybeg(const XArray *ary)
 		return ary->base;
 }
 
-elem_t *aryend(const XArray *ary)
+elem_t* aryend(const XArray *ary)
 {
 	if (NULL == ary || 0 == arylen(ary))
 		return NULL;
@@ -257,7 +257,7 @@ elem_t *aryend(const XArray *ary)
 		return ary->base + arylen(ary);
 }
 
-elem_t* arynext(XArray *ary, elem_t *current)
+elem_t* arynext(const XArray *ary, const elem_t *current)
 {
 	if (NULL == ary || 0 == arylen(ary))
 		return NULL;
