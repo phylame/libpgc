@@ -53,10 +53,10 @@ extern void rmlist(XList *list);
 extern void clrlist(XList *list);
 
 /* get the length of list */
-extern size_t listlen(const XList *list);
+#define listlen xxxlen
 
 /* travel list */
-extern void listrv(XList *list, bool (*walk)(elem_t value, void *arg),
+extern void listrv(XList *list, bool (*visit)(elem_t value, void *arg),
 	void *arg);
 
 /* append an element to the end of list */
@@ -84,8 +84,7 @@ extern bool listhas(const XList *list, const elem_t value);
 extern bool listset(XList *list, int index, elem_t value);
 
 /* get element at index in list */
-extern elem_t listget(const XList *list, int index,
-	elem_t def_value);
+extern elem_t listget(const XList *list, int index, elem_t def_value);
 
 #ifdef __cplusplus
 }

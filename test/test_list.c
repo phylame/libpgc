@@ -34,9 +34,9 @@ int main()
     listpop(ls, 3);
     printf("size: %ld\n", listlen(ls));
     listrv(ls, w, NULL);
-    printf("\n");
+    printf("set index:8 to 77\n");
     pb(listset(ls, 8, 77));
-    printf("in %d", listget(ls, 8, 1000));
+    printf("in index: 8 %d\n", listget(ls, 8, 1000));
     printf("\n");
     rmlist(ls);
     return 0;

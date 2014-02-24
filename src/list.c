@@ -59,19 +59,19 @@ static xnode get_node_by_value(const XList *list, const elem_t value,
 		return NULL;
 	for (cur = list->head->next; cur != list->tail; cur = cur->next) {
 		if (list->cmp != NULL) {	// has compared function
-			if (0 == list->cmp(cur->data, value))
-				break;
-		} else if (cur->data == value) {
-			break;
+			if (0 == list->cmp(cur->data, value)) {		//found
+				if (index != NULL)
+					*index = i;
+				return cur;
+			}
+		} else if (cur->data == value) {	// found
+			if (index != NULL)
+				*index = i;
+			return cur;
 		}
 		++i;
 	}
-	if (cur != list->tail) {
-		if (index != NULL)
-			*index = i;
-		return cur;
-	} else
-		return NULL;
+	return NULL;
 }
 
 /* get node by index */
@@ -115,6 +115,7 @@ bool initlist(XList *list)
 	}
 	list->head->next = list->tail;
 	list->tail->prev = list->head;
+	list->cmp = NULL;
 	list->size = 0;
 	return true;
 }
@@ -137,17 +138,15 @@ void clrlist(XList *list)
 	cur = list->head->next;
 	while (cur != list->tail) {
 		cur = cur->next;
-		rmnod(cur->prev);
-		--list->size;
+		delete_node(cur->prev);
 	}
+	list->head->next = list->tail;
+	list->tail->prev = list->head;
+	list->size = 0;
 }
 
-size_t listlen(const XList *list)
-{
-	return NULL == list ? 0 : list->size;
-}
-
-void listrv(XList *list, bool (*visit)(elem_t value, void *arg), void *arg)
+void listrv(XList *list, bool (*visit)(elem_t value, void *arg),
+	void *arg)
 {
 	xnode cur;
 	if (NULL == list || NULL == visit)

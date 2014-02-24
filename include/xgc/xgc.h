@@ -47,6 +47,8 @@ extern xnode make_node(elem_t data);
 /* remove node from memory */
 extern void delete_node(xnode node);
 
+/* get the length of collection */
+#define xxxlen(xxx)			(NULL == (xxx) ? 0 : (xxx)->size)
 
 #ifdef __cplusplus
 }

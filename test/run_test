@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+gcc -g -Wall -I../include ../src/*.c $1

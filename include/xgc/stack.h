@@ -29,6 +29,7 @@ extern "C" {
 
 #include "list.h"
 
+// using the XList
 typedef XList XStack;
 
 #define mkstk mklist

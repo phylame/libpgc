@@ -1,3 +1,7 @@
+# Backup files
+*~
+*.swp
+
 # Object files
 *.o
 *.ko
@@ -16,3 +20,17 @@
 *.exe
 *.out
 *.app
+
+# Make files
+aclocal.m4
+autom4te.cache/
+build/
+.deps/
+config.*
+depcomp
+install-sh
+libtool
+missing
+Makefile.in
+stamp-h1
+ltmain.sh
