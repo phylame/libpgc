@@ -48,6 +48,14 @@ static elem_t* get_elem_by_index(const XArray *ary, int index)
 	return &ary->base[index];
 }
 
+int compare_element(XArray *ary, elem_t *a, elem_t *b)
+{
+	if (ary->cmp != NULL)
+		return ary->cmp(*a, *b);
+	else
+		return *a - *b;
+}
+
 static bool move_forward(XArray *ary, int index, int num)
 {
 	int i;
@@ -80,6 +88,14 @@ static bool move_backward(XArray *ary, int index, int num)
 	return true;
 }
 
+static void copy_from(elem_t *dest, elem_t *begin, elem_t *end)
+{
+	elem_t *cur;
+	for (cur = begin; cur != end; ++cur) {
+		*dest++ = *cur;
+	}
+}
+
 XArray *mkary(void)
 {
 	XArray *ary = malloc(sizeof(XArray));
@@ -89,6 +105,21 @@ XArray *mkary(void)
 		free(ary);
 		return NULL;
 	}
+	return ary;
+}
+
+XArray* aryfrom(elem_t *src, int index, size_t num)
+{
+	XArray *ary = malloc(sizeof(XArray));
+	if (NULL == ary || NULL == src || index < 0)
+		return NULL;
+	if (! initary(ary, num, ARRAY_INCREMENT)) {
+		free(ary);
+		return NULL;
+	}
+	copy_from(ary->base, src + index, src + index + num);
+	ary->size = num;
+	ary->cmp = NULL;
 	return ary;
 }
 
@@ -117,6 +148,28 @@ void clrary(XArray *ary)
 	if (NULL == ary)
 		return;
 	ary->size = 0;
+}
+
+int arycmp(XArray *ary1, XArray *ary2)
+{
+	int i, ret = 0;
+	if (arylen(ary1) > arylen(ary2))
+		return 1;
+	else if (arylen(ary1) < arylen(ary2))
+		return -1;
+	for (i = 0; i < arylen(ary1); ++i) {
+		if ((ret = compare_element(ary1, ary1->base + i,
+						ary2->base + i) != 0))
+			return ret;
+	}
+	return ret;
+}
+
+bool arycpy(XArray *dest, const XArray *src, size_t num)
+{
+	if (NULL == dest || NULL == src)
+		return false;
+	return false;
 }
 
 void arytrv(XArray *ary, bool (*visit)(elem_t a, void *arg), void *arg)
