@@ -31,7 +31,7 @@ int main()
     printf("size: %ld\n", listlen(ls));
     listdel(ls, 99);
     printf("size: %ld\n", listlen(ls));
-    listpop(ls, 3);
+    listpop(ls, 3, NULL);
     printf("size: %ld\n", listlen(ls));
     listrv(ls, w, NULL);
     printf("set index:8 to 77\n");

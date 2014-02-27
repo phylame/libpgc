@@ -35,12 +35,14 @@ void pa2(XArray *ary)
 int main(void)
 {
 	int i;
-	XArray *ary1 = mkary(), *ary = mkary();
+	elem_t ls[10] = {9,8,7,6,5,4,3,2,1,0};
+	XArray *ary1, *ary = mkary();
 	elem_t abc;
-	for (i = 0; i < 5; ++i)
-		aryadd(ary1, i + 15);	// append
-	for (i = 0; i < 10; ++i)
+	for (i = 0; i < 10; ++i) {
 		aryadd(ary, i);
+	}
+	ary1 = aryfrom(ls, 10);
+	pa1(ary1);
 	aryins(ary, 5, 888);		// insert
 	aryext(ary, ary1);		// extend
 	pa1(ary);

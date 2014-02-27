@@ -44,7 +44,7 @@ typedef struct _array {
 
 extern XArray* mkary(void);
 
-extern XArray* aryfrom(elem_t *src, int index, size_t num);
+extern XArray* aryfrom(elem_t *begin, size_t num);
 
 extern bool initary(XArray *ary, size_t capacity, size_t increment);
 
@@ -56,11 +56,6 @@ extern void clrary(XArray *ary);
 #define arycap(ary)			(NULL == ary ? 0 : ary->capacity)
 
 extern int arycmp(XArray *ary1, XArray *ary2);
-
-extern bool arycpy(XArray *dest, const XArray *src, size_t num);
-
-extern int aryto(const XArray *ary, int index, size_t num, elem_t *dest,
-		size_t destlen);
 
 extern void arytrv(XArray *ary, bool (*visit)(elem_t value, void *arg),
 	void *arg);
@@ -90,7 +85,7 @@ extern elem_t* arybeg(const XArray *ary);
 extern elem_t* aryend(const XArray *ary);
 
 /* next point */
-extern elem_t* arynext(const XArray *ary, const elem_t *current);
+extern elem_t* arynext(const XArray *ary, elem_t *current);
 
 #ifdef __cplusplus
 }

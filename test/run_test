@@ -4,4 +4,6 @@ cwd=`pwd`
 cd ..
 make
 cd $cwd
-gcc -g -Wall -I../include -L../dist -lxgc $1
+gcc -g -Wall -c -o "$1".o -I../include $1
+gcc -g -Wall -o test "$1".o -L../dist -lxgc
+rm "$1".o

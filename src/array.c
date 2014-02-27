@@ -90,9 +90,9 @@ static bool move_backward(XArray *ary, int index, int num)
 
 static void copy_from(elem_t *dest, elem_t *begin, elem_t *end)
 {
-	elem_t *cur;
-	for (cur = begin; cur != end; ++cur) {
-		*dest++ = *cur;
+	elem_t *cur = begin;
+	while (cur != end) {
+		*dest++ = *cur++;
 	}
 }
 
@@ -108,16 +108,16 @@ XArray *mkary(void)
 	return ary;
 }
 
-XArray* aryfrom(elem_t *src, int index, size_t num)
+XArray* aryfrom(elem_t *begin, size_t num)
 {
 	XArray *ary = malloc(sizeof(XArray));
-	if (NULL == ary || NULL == src || index < 0)
+	if (NULL == ary || NULL == begin)
 		return NULL;
 	if (! initary(ary, num, ARRAY_INCREMENT)) {
 		free(ary);
 		return NULL;
 	}
-	copy_from(ary->base, src + index, src + index + num);
+	copy_from(ary->base, begin, begin + num);
 	ary->size = num;
 	ary->cmp = NULL;
 	return ary;
@@ -163,13 +163,6 @@ int arycmp(XArray *ary1, XArray *ary2)
 			return ret;
 	}
 	return ret;
-}
-
-bool arycpy(XArray *dest, const XArray *src, size_t num)
-{
-	if (NULL == dest || NULL == src)
-		return false;
-	return false;
 }
 
 void arytrv(XArray *ary, bool (*visit)(elem_t a, void *arg), void *arg)
@@ -310,7 +303,7 @@ elem_t* aryend(const XArray *ary)
 		return ary->base + arylen(ary);
 }
 
-elem_t* arynext(const XArray *ary, const elem_t *current)
+elem_t* arynext(const XArray *ary, elem_t *current)
 {
 	if (NULL == ary || 0 == arylen(ary))
 		return NULL;

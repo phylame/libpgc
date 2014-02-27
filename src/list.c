@@ -262,7 +262,7 @@ elem_t* listend(const XList *list)
 		return &list->tail->data;
 }
 
-elem_t* listnext(const XList *list, const elem_t *current)
+elem_t* listnext(const XList *list, elem_t *current)
 {
 	static xnode node = NULL;
 	if (NULL == list || 0 == listlen(list))

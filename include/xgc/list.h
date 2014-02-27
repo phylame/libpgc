@@ -90,7 +90,7 @@ extern elem_t* listbeg(const XList *list);
 
 extern elem_t* listend(const XList *list);
 
-extern elem_t* listnext(const XList *list, const elem_t *current);
+extern elem_t* listnext(const XList *list, elem_t *current);
 
 #ifdef __cplusplus
 }
